@@ -1,0 +1,104 @@
+<html>
+
+<body>
+    <h2>Fridge Items</h2>
+    <table border="2px">
+        <thead>
+            <td>
+                <b>Item</b>
+            </td>
+            <td>
+                <b>Count</b>
+            </td>
+            <td>
+                <b>Remove</b>
+            </td>
+        </thead>
+        <tbody>
+            <tr class="tablerow">
+                <td>Cucumber</td>
+                <td>3</td>
+                <td><button class='deleteBtn' onClick="remove(event)">X</button></td>
+            </tr>
+            <tr class="tablerow">
+                <td>Lettuce</td>
+                <td>5</td>
+                <td><button class='deleteBtn' onClick="remove(event)">X</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <form>
+        <input type="text" id="add">
+        <button>Add</button>
+    </form>
+</body>
+<script>
+    const form = document.querySelector('form');
+    const tbody = document.querySelector('tbody');
+    const table = document.querySelector('table');
+
+    function onAddItem(e) {
+        e.preventDefault();
+        try {
+            const addedElement = String(document.getElementById('add').value);
+            if (addedElement == '' || isNaN(addedElement.slice(-1, addedElement.length))) {
+                alert('Invalid value!');
+                return;
+            }
+            const Item = addedElement.slice(0, -1);
+            const count = addedElement.slice(-1, addedElement.length);
+            tbody.innerHTML += `
+          <tr class="tablerow">
+            <td>${Item}</td>
+            <td>${count}</td>
+            <td><button class='deleteBtn' onClick="remove(event)">X</button></td>
+          </tr>
+          `;
+        }
+        catch (err) {
+            alert('Error Occured!');
+        }
+    }
+    function onDeleteRow(e) {
+        if (!e.target.classList.contains('deleteBtn')) {
+            return;
+        }
+
+        const btn = e.target;
+        btn.closest('tr').remove();
+    }
+    form.addEventListener('submit', onAddItem);
+    table.addEventListener('click', onDeleteRow);
+
+    function remove(event) {
+        //document.getElementsByClassName('tablerow').style.display = 'none';
+    }
+</script>
+<style>
+    td {
+        padding-right: 50px;
+    }
+
+    table {
+
+        border-collapse: collapse;
+        text-align: center;
+        position: abslute;
+        width: 60%;
+    }
+
+    thead,
+    tr {
+        background-color: lightblue;
+        color: blue;
+        border: solid 1px black;
+        padding: 6px;
+    }
+
+    tr:hover {
+        background-color: #22f2f2;
+    }
+</style>
+
+</html>
